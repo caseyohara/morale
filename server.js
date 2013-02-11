@@ -16,15 +16,6 @@ app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
-app.post('/', function(req, res) {
-  var morale = parseInt(req.body.morale);
-  if (morale < 0) morale = 0;
-  if (morale > 100) morale = 100;
-  MORALE = morale;
-  io.sockets.emit('morale', { morale: MORALE });
-  res.send(202);
-})
-
 io.configure(function() {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
@@ -32,6 +23,13 @@ io.configure(function() {
 
 io.sockets.on('connection', function(socket) {
   socket.emit('morale', { morale: MORALE });
+  socket.on('update', function (data) {
+    var morale = data.morale;
+    if (morale < 0) morale = 0;
+    if (morale > 100) morale = 100;
+    MORALE = morale;
+    io.sockets.emit('morale', { morale: MORALE });
+  });
 });
 
 var port = process.env.PORT || 3000;

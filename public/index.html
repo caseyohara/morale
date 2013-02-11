@@ -16,12 +16,18 @@
   <script src="/js/meter.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    window.meter = new Meter($(".meter"));
-    window.socket = io.connect(location.origin);
+    (function() {
+      var meter = new Meter($(".meter"));
+      var socket = io.connect(location.origin);
 
-    socket.on('morale', function (data) {
-      meter.set(data.morale);
-    });
+      socket.on('morale', function (data) {
+        meter.set(data.morale);
+      });
+
+      meter.on('change', function(value) {
+        socket.emit('update', { morale: value })
+      });
+    })();
   </script>
 </body>
 </html>

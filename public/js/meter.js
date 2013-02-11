@@ -1,7 +1,9 @@
-function Meter($meter) {
+function Meter($meter, api) {
   this.$title = $meter.find('h1');
   this.$meter = $meter.find('input');
+  this.api = api;
   this.value = parseInt($meter.val()) || 0;
+  this.observers = {};
   this.observe();
   this.colorize();
 }
@@ -13,9 +15,16 @@ Meter.prototype.observe = function() {
     'change' : function (value) {
       self.value = parseInt(value);
       self.colorize();
-      $.post("/", { morale: self.value });
+      self.observers["change"].forEach(function(fn) {
+        fn(self.value);
+      });
     }
   });
+}
+
+Meter.prototype.on = function(event, fn) {
+  this.observers[event] = this.observers[event] || [];
+  this.observers[event].push(fn);
 }
 
 Meter.prototype.set = function(value) {
