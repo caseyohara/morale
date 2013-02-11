@@ -13,7 +13,7 @@ Meter.prototype.observe = function() {
     'change' : function (value) {
       self.value = parseInt(value);
       self.colorize();
-      console.log("changed");
+      $.post("/", { morale: self.value });
     }
   });
 }
