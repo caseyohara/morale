@@ -15,7 +15,9 @@ Meter.prototype.observe = function() {
     'change' : function (value) {
       self.value = parseInt(value);
       self.colorize();
-      self.observers["change"].forEach(function(fn) {
+    },
+    'release' : function (value) {
+      self.observers["release"].forEach(function(fn) {
         fn(self.value);
       });
     }

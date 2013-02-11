@@ -24,7 +24,7 @@
         meter.set(data.morale);
       });
 
-      meter.on('change', function(value) {
+      meter.on('release', function(value) {
         socket.emit('update', { morale: value })
       });
     })();
