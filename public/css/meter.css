@@ -1,0 +1,60 @@
+@import url(normalize.css);
+
+@font-face {
+  font-family: "ProximaNova";
+  src: url("/fonts/ProximaNova-Reg-webfont.woff");
+}
+
+@font-face {
+  font-family: "ProximaNova Bold";
+  src: url("/fonts/ProximaNova-Bold-webfont.woff");
+}
+
+@font-face {
+  font-family: "ProximaNova Light";
+  src: url("/fonts/ProximaNova-Light-webfont.woff");
+}
+
+@font-face {
+  font-family: "ProximaNova Sbold";
+  src: url("/fonts/ProximaNova-Sbold-webfont.woff");
+}
+
+@font-face {
+  font-family: "ProximaNova Thin";
+  src: url("/fonts/ProximaNova-Thin-webfont.woff");
+}
+
+@font-face {
+  font-family: "ProximaNova Xbold";
+  src: url("/fonts/ProximaNova-Xbold-webfont.woff");
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  background: #252525;
+}
+
+body {
+  font-family: "ProximaNova";
+}
+
+.meter {
+  width: 700px;
+  margin: 50px auto;
+}
+
+h1 {
+  font-family: "ProximaNova Xbold";
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 80px;
+  letter-spacing: -4px;
+}
+
+input {
+  font-family: "ProximaNova Bold" !important;
+  font-size: 180px !important;
+}
+

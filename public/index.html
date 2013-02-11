@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Tom's Morale</title>
+  <link rel="stylesheet" type="text/css" href="/css/meter.css" />
+</head>
+<body>
+  <div class="meter">
+    <h1>Tom's Morale</h1>
+    <input type="text" data-bgColor="#313131" data-angleOffset="-125" data-angleArc="250" value="0" data-width="700" data-height="700" data-min="0" data-max="100" />
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.knob.js"></script>
+  <script src="/js/meter.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    window.meter = new Meter($(".meter"));
+    window.socket = io.connect(location.origin);
+
+    socket.on('morale', function (data) {
+      meter.set(data.morale);
+    });
+  </script>
+</body>
+</html>
+
