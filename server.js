@@ -12,10 +12,6 @@ app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
-app.get('/', function(req, res) {
-  res.sendfile('index.html');
-});
-
 io.configure(function() {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
@@ -34,5 +30,4 @@ io.sockets.on('connection', function(socket) {
 
 var port = process.env.PORT || 3000;
 server.listen(port);
-console.log("Tom Server listening on port " + port);
 
