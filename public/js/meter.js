@@ -19,20 +19,9 @@ Meter.prototype.observe = function() {
 }
 
 Meter.prototype.set = function(value) {
-  var self = this;
-  value = parseInt(value);
-
-  var start = self.value,
-      end = value,
-      addend = (end > start) ? 1 : -1,
-      remaining = Math.abs(end - start);
-
-  var interval = setInterval(function() {
-    if (--remaining < 0) return clearInterval(interval);
-    self.value += addend;
-    self.$meter.val(self.value).trigger('change');
-    self.colorize();
-  }, 30);
+  this.value = parseInt(value);
+  this.$meter.val(this.value).trigger('change');
+  this.colorize();
 }
 
 Meter.prototype.colorize = function() {
