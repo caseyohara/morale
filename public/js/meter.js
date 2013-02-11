@@ -45,14 +45,11 @@ function colorFor(value) {
   if (value < 0) value = 0;
   if (value > 100) value = 100;
 
-  this.colors = this.colors || (function() {
-    return Range(0, 100).map(function(i) {
-      var h = Math.floor(((i * 0.22) / 100) * 360),
-          s = 90,
-          l = 50;
-      return "hsl(" + h + "," + s + "%," + l + "%" + ")";
-    });
-  })();
+  this.colors = this.colors || Range(0, 100).map(function(i) {
+    var hue = Math.floor(((i * 0.22) / 100) * 360);
+    return "hsl(" + hue + ",90%,50%)";
+  });
+
   return this.colors[value];
 }
 
