@@ -1,7 +1,6 @@
-function Meter($meter, api) {
+function Meter($meter) {
   this.$title = $meter.find('h1');
   this.$meter = $meter.find('input');
-  this.api = api;
   this.value = parseInt($meter.val()) || 0;
   this.observers = {};
   this.observe();
