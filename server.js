@@ -3,7 +3,7 @@ var express = require('express'),
     server  = require('http').createServer(app),
     io      = require('socket.io').listen(server);
 
-var MORALE = 0;
+var MORALE = 50;
 
 app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
