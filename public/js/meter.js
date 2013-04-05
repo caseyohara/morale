@@ -1,7 +1,9 @@
 function Meter($meter) {
   this.$title = $meter.find('h1');
   this.$meter = $meter.find('input');
+  this.$updated = $meter.find('p');
   this.value = parseInt($meter.val()) || 0;
+  this.updated = new Date();
   this.observers = {};
   this.observe();
   this.colorize();
@@ -28,9 +30,11 @@ Meter.prototype.on = function(event, fn) {
   this.observers[event].push(fn);
 }
 
-Meter.prototype.set = function(value) {
-  this.value = parseInt(value);
+Meter.prototype.set = function(morale) {
+  this.value = parseInt(morale.value);
+  this.updated = parseInt(morale.updated);
   this.$meter.val(this.value).trigger('change');
+  this.$updated.find('time').text(time_ago_in_words(this.updated));
   this.colorize();
 }
 

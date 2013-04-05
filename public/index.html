@@ -9,10 +9,12 @@
   <div class="meter">
     <h1>Tom&rsquo;s Morale</h1>
     <input type="text" data-bgColor="#313131" data-angleOffset="-125" data-angleArc="250" value="0" data-width="700" data-height="700" data-min="0" data-max="100" />
+    <p id="updated">last updated: <time></time></p>
   </div>
 
   <script src="/js/jquery.min.js"></script>
   <script src="/js/jquery.knob.js"></script>
+  <script src="/js/time_ago_in_words.js"></script>
   <script src="/js/meter.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -20,8 +22,8 @@
       var meter = new Meter($(".meter"));
       var socket = io.connect(location.origin);
 
-      socket.on('morale', function (data) {
-        meter.set(data.morale);
+      socket.on('morale', function (morale) {
+        meter.set(morale);
       });
 
       meter.on('release', function(value) {

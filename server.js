@@ -1,9 +1,15 @@
 var express = require('express'),
     app     = express(),
     server  = require('http').createServer(app),
-    io      = require('socket.io').listen(server);
+    io      = require('socket.io').listen(server),
+    cache   = require('redis-url').connect(process.env.REDISTOGO_URL),
+    Morale  = require('./lib/morale');
 
-var MORALE = 50;
+cache.get('morale', function (err, morale) {
+  if (!morale) {
+    cache.set('morale', new Morale(50).toString());
+  }
+});
 
 app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
@@ -18,13 +24,17 @@ io.configure(function() {
 });
 
 io.sockets.on('connection', function(socket) {
-  socket.emit('morale', { morale: MORALE });
+  cache.get('morale', function (err, morale) {
+    var morale = Morale.fromString(morale);
+    socket.emit('morale', morale.toJSON());
+  });
+
   socket.on('update', function (data) {
-    var morale = data.morale;
-    if (morale < 0) morale = 0;
-    if (morale > 100) morale = 100;
-    MORALE = morale;
-    io.sockets.emit('morale', { morale: MORALE });
+    var morale = new Morale(data.morale);
+
+    cache.set('morale', morale.toString(), function(err){
+      io.sockets.emit('morale', morale.toJSON());
+    });
   });
 });
 
