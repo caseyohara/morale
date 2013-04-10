@@ -18,6 +18,13 @@ app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
+app.get('/morale.json', function(req, res) {
+  cache.get('morale', function (err, morale) {
+    var morale = Morale.fromString(morale);
+    res.json(morale.toJSON());
+  });
+});
+
 io.configure(function() {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
