@@ -25,6 +25,19 @@ app.get('/morale.json', function(req, res) {
   });
 });
 
+app.post('/', function(request, response) {
+  var value = request.body.morale;
+  if (!value) return;
+
+  var morale = new Morale(value);
+
+  cache.set('morale', morale.toString(), function(err){
+    io.sockets.emit('morale', morale.toJSON());
+  });
+
+  response.send(202);
+});
+
 io.configure(function() {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
